@@ -1,0 +1,3 @@
+[submodule "bundle/NERD_tree"]
+	path = bundle/NERD_tree
+	url = git://github.com/scrooloose/nerdtree.git

@@ -1,0 +1,14 @@
+This repository contains my vim configuration file and plugins.
+
+Installation:
+
+    git clone git://github.com/ckl/dotvim.git ~/.vim
+
+Create symlinks to vimrc:
+
+    ln -s ~/.vim/vimrc ~/.vimrc
+
+Switch to the ~/.vim directory and fetch submodules (plugins)
+
+    cd ~/.vim
+    git submodule update --init

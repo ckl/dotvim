@@ -1,0 +1,1 @@
+csv-0.16.vba: call delete('/home/chris/.vim/ftplugin/csv.vim')|call delete('/home/chris/.vim/doc/ft-csv.txt')|call delete('/home/chris/.vim/syntax/csv.vim')|call delete('/home/chris/.vim/ftdetect/csv.vim')
