@@ -200,6 +200,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
@@ -214,9 +215,12 @@ filetype plugin indent on    " required
 "" NERDTree settings 
 "----------------------------------------------------------------------------
 " put focus to NERDTree by closing it and re-opening it
-map <leader>n :NERDTreeClose<cr>:NERDTreeToggle<cr>
-map <leader>m :NERDTreeClose<cr>:NERDTreeFind<cr>
-map <leader>N :NERDTreeClose<cr>
+"map <leader>n :NERDTreeClose<cr>:NERDTreeToggle<cr>
+"map <leader>m :NERDTreeClose<cr>:NERDTreeFind<cr>
+"map <leader>N :NERDTreeClose<cr>
+"map <leader>n :NERDTreeTabsOpen<cr>
+map <leader>n :NERDTreeFocusToggle<cr>
+map <leader>N :NERDTreeTabsClose<cr>
 
 " close NERDTree when opening files from NERDTree
 let NERDTreeQuitOnOpen=1
@@ -226,8 +230,12 @@ let NERDTreeHighlightCursorline=1
 "
 " don't display files with these extensions
 let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
-             \ '\.tar\.gz$']
+             \ '\.tar\.gz$', '__pycache']
 
+" reference
+" open file in new tab - t
+" open file in horizontal split window - i
+" open file in vertical split window   - s
 
 "----------------------------------------------------------------------------
 " YouCompleteMe
