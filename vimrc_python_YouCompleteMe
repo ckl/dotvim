@@ -179,6 +179,9 @@ nmap <leader>tl :tablast<cr>
 " ,ts saves tab session (there's a space after mksession)
 nmap <leader>ts :mksession 
 
+" close the i-th tab (or current tab if none specified). space after tabclose
+nmap <leader>tc :tabclose 
+
 
 "----------------------------------------------------------------------------
 " Vundle
@@ -259,7 +262,7 @@ endfunction
 
 
 " re-colors the active tab as white on red, shortens tab names
-" to 6 characters, and adds the tab number before the name
+" to 10 characters, and adds the tab number before the name
 function ShortTabLine()
     let ret = ''
     for i in range(tabpagenr('$'))
@@ -283,8 +286,8 @@ function ShortTabLine()
 
         " only show the first 6 letters of the filename and
         " .. if the filename is more than 8 characters long
-        if strlen(filename) >= 8
-            let ret .= '[' . (i+1) . ':' . filename[0:5] . '..]'
+        if strlen(filename) > 10
+            let ret .= '[' . (i+1) . ':' . filename[0:9] . '..]'
         else
             let ret .= '[' . (i+1) . ':' . filename . ']'
         endif
