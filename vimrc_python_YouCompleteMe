@@ -54,6 +54,10 @@ set tabline=%!ShortTabLine()  " shorten tab names and add the tab numbers to eac
 " set the cursor line to have a dark gray background
 highlight CursorLine ctermbg=darkgray
 
+" remember folds and cursor position on exit
+au BufWinLeave * silent! mkview
+au BufWinEnter * silent! loadview
+
 "----------------------------------------------------------------------------
 " key bindings
 "----------------------------------------------------------------------------
