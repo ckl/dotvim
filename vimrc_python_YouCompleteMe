@@ -165,10 +165,10 @@ nmap <C-k> :resize +3<cr>
 nmap <leader>tt :tabnew 
 
 " ,tn moves to next tab
-nmap <leader>tn :tabnext<cr>
+"nmap <leader>tn :tabnext<cr>
 
 " ,tp moves to previous tab
-nmap <leader>tp :tabprevious<cr>
+"nmap <leader>tp :tabprevious<cr>
 
 " ,tf moves to first tab
 nmap <leader>tf :tabfirst<cr>
@@ -181,6 +181,11 @@ nmap <leader>ts :mksession
 
 " close the i-th tab (or current tab if none specified). space after tabclose
 nmap <leader>tc :tabclose 
+
+" tab reference
+" gt        go to next tab
+" gT        go to previous tab
+" {i}gt     go to i-th tab
 
 
 "----------------------------------------------------------------------------
