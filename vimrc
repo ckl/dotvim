@@ -1,12 +1,4 @@
-" place in ~/.vimrc
-
-" initialize pathogen plugin handler
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+set t_Co=256
 
 "----------------------------------------------------------------------------
 " Global vim configuration
@@ -18,6 +10,8 @@ set history=100         " remember more commands and search history
 set undolevels=1000     " remember more levels of undo
 set tabstop=4			" width of tab character
 set shiftwidth=4		" num columns to inc/dec when using <</>>
+set softtabstop=4
+set fileformat=unix
 set expandtab			" convert tab to equivalent number of spaces
 set noerrorbells        " disable audible error bell
 set novisualbell        " disable visual error bell
@@ -38,47 +32,27 @@ set nostartofline       " keep cursor in same column after certain commands
 set scroll=8            " number of limes to scroll with ctrl-u/d
 set showbreak=-->       " marker to highlight wrapped lines
 set foldcolumn=2        " 2-character wide column that indicates folds
+set foldmethod=indent   " create folds based on indent lines
+set foldlevel=99
 set lazyredraw          " don't redraw screen for macros or commands
 set pastetoggle=<F2>    " press F2 to disable autoindent when pasting
 set wildmenu            " enhanced command-line completion
 set mousehide           " hide the mouse pointer while typing
 set nocompatible        " more vim functionality at expense of vi-compatibility
+filetype on
 
-colorscheme zenburn      " color schemes at /usr/share/vim/vim72/colors
-filetype plugin on      " turn plugins on
 syntax on               " turn syntax highlighting on
+set background=dark
+colorscheme molokai     " color schemes at ~/.vim/colors
 
-" get custom status line from function 
-set statusline=%!GetStatusline()
-set laststatus=2        " always display status line
+" set the cursor line to have a dark gray background
+highlight CursorLine ctermbg=black
 
-" shorten tab names and add the tab numbers to each tab
-set tabline=%!ShortTabLine()
- 
 " remember folds and cursor position on exit
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
 
-" set the cursor line to have a dark gray background
-highlight CursorLine ctermbg=darkgray
-
-"----------------------------------------------------------------------------
-" NERDTree settings 
-"----------------------------------------------------------------------------
-" put focus to NERDTree by closing it and re-opening it
-map <leader>n :NERDTreeClose<cr>:NERDTreeToggle<cr>
-map <leader>m :NERDTreeClose<cr>:NERDTreeFind<cr>
-map <leader>N :NERDTreeClose<cr>
-
-" close NERDTree when opening files from NERDTree
-let NERDTreeQuitOnOpen=1
-
-" highlight selected entry in the tree
-let NERDTreeHighlightCursorline=1
-
-" don't display files with these extensions
-let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
-            \ '\.tar\.gz$']
+set tabline=%!ShortTabLine()  " shorten tab names and add the tab numbers to each tab
 
 "----------------------------------------------------------------------------
 " key bindings
@@ -129,6 +103,11 @@ vnoremap / /\v
 " sudo write with w!! (in case you forgot to sudo before opening file)
 cmap w!! w !sudo tee % > /dev/null
 
+" Enable folding with the spacebar
+nnoremap <space> za
+
+" run python script with F9
+nnoremap <buffer> <F9> :exec 'w !python3' shellescape(@%, 1)<cr>
 
 "----------------------------------------------------------------------------
 " mappings for split windows
@@ -199,24 +178,139 @@ nmap <leader>tl :tablast<cr>
 " ,ts saves tab session (there's a space after mksession)
 nmap <leader>ts :mksession 
 
+" close the i-th tab (or current tab if none specified). space after tabclose
+nmap <leader>tc :tabclose 
+
+" tab reference
+" gt        go to next tab
+" gT        go to previous tab
+" {i}gt     go to i-th tab
+
+
+"----------------------------------------------------------------------------
+" Vundle
+"----------------------------------------------------------------------------
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+"
+" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
+" For YouCompleteMe on Debian, do the following:
+" sudo apt-get install vim vim-youcompleteme
+" vam install youcompleteme
+" cp /usr/share/doc/vim-youcompleteme/examples/ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
+" let g:ycm_global_ycm_extra_conf = ~/.vim/.ycm_extra_conf.py
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-obsession'
+Plugin 'vimwiki/vimwiki'
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"----------------------------------------------------------------------------
+"" Plugin settings 
+"----------------------------------------------------------------------------
+"au VimEnter * Obsession     " start Obsession on start to track session
+
+
+"----------------------------------------------------------------------------
+"" NERDTree settings 
+"----------------------------------------------------------------------------
+" put focus to NERDTree by closing it and re-opening it
+"map <leader>n :NERDTreeClose<cr>:NERDTreeToggle<cr>
+"map <leader>m :NERDTreeClose<cr>:NERDTreeFind<cr>
+"map <leader>N :NERDTreeClose<cr>
+"map <leader>n :NERDTreeTabsOpen<cr>
+"map <leader>n :NERDTreeFocusToggle<cr>
+map <C-n> :NERDTreeFocusToggle<cr>
+map <leader>n :NERDTreeTabsClose<cr>
+
+" close NERDTree when opening files from NERDTree
+let NERDTreeQuitOnOpen=1
+
+" highlight selected entry in the tree
+let NERDTreeHighlightCursorline=1
+"
+" don't display files with these extensions
+let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
+             \ '\.tar\.gz$', '__pycache', 'Session.vim']
+
+" reference
+" open file in new tab - t
+" open file in horizontal split window - i
+" open file in vertical split window   - s
+
+"----------------------------------------------------------------------------
+" YouCompleteMe
+"----------------------------------------------------------------------------
+map <C-g> :YcmCompleter GoToDefinition<cr>
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+
+let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+
+
+"----------------------------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------------------------
+"set statusline=[%n]\ %t
+nnoremap <silent> <C-p> :<C-u>call ToggleErrors()<cr>
+nnoremap <leader>e :lnext<cr>
+nnoremap <leader>r :lprevious<cr>
+
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 
 "----------------------------------------------------------------------------
 " buffers and Buffer Explorer plugin
 "----------------------------------------------------------------------------
 " open buffer explorer (takes up full window)
-nmap <leader>be :BufExplorer<cr>
+"nmap <leader>be :BufExplorer<cr>
 
 " open buffer explorer in vertical split screen
-nmap <leader>bv :BufExplorerVerticalSplit<cr>
-
+" nmap <leader>bv :BufExplorerVerticalSplit<cr>
+"
 " open buffer explorer in horizontal split screen
-nmap <leader>bh :BufExplorerHorizontalSplit<cr>
-
+" nmap <leader>bh :BufExplorerHorizontalSplit<cr>
+"
 " list all unhidden buffers
-nmap <leader>bl :ls<cr>
-
+" nmap <leader>bl :ls<cr>
+"
 " delete current buffer
-nmap <leader>bd :bdelete<cr>
+" nmap <leader>bd :bdelete<cr>
+
+
+"----------------------------------------------------------------------------
+" set status line 
+"----------------------------------------------------------------------------
+"set statusline=%!GetStatusline()
+
+set statusline=%f
+set statusline+=%{ObsessionStatus()}
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+set laststatus=2        " always show filename
+
 
 "----------------------------------------------------------------------------
 " functions
@@ -242,8 +336,9 @@ function GetStatusline()
     return ret
 endfunction
 
+
 " re-colors the active tab as white on red, shortens tab names
-" to 6 characters, and adds the tab number before the name
+" to 10 characters, and adds the tab number before the name
 function ShortTabLine()
     let ret = ''
     for i in range(tabpagenr('$'))
@@ -267,8 +362,8 @@ function ShortTabLine()
 
         " only show the first 6 letters of the filename and
         " .. if the filename is more than 8 characters long
-        if strlen(filename) >= 8
-            let ret .= '[' . (i+1) . ':' . filename[0:5] . '..]'
+        if strlen(filename) > 10
+            let ret .= '[' . (i+1) . ':' . filename[0:9] . '..]'
         else
             let ret .= '[' . (i+1) . ':' . filename . ']'
         endif
@@ -278,4 +373,13 @@ function ShortTabLine()
     " and reset tab page #
     let ret .= '%#TabLineFill#%T'
     return ret
+endfunction
+
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
 endfunction
