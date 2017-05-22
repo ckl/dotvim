@@ -1,6 +1,4 @@
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+set t_Co=256
 
 "----------------------------------------------------------------------------
 " Global vim configuration
@@ -43,11 +41,12 @@ set mousehide           " hide the mouse pointer while typing
 set nocompatible        " more vim functionality at expense of vi-compatibility
 filetype off
 
-colorscheme zenburn     " color schemes at ~/.vim/colors
 syntax on               " turn syntax highlighting on
+set background=dark
+colorscheme molokai     " color schemes at ~/.vim/colors
 
 " set the cursor line to have a dark gray background
-highlight CursorLine ctermbg=darkgray
+highlight CursorLine ctermbg=black
 
 " remember folds and cursor position on exit
 au BufWinLeave * silent! mkview
@@ -238,7 +237,7 @@ let NERDTreeHighlightCursorline=1
 "
 " don't display files with these extensions
 let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
-             \ '\.tar\.gz$', '__pycache']
+             \ '\.tar\.gz$', '__pycache', 'Session.vim']
 
 " reference
 " open file in new tab - t
