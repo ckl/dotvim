@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/chris/.vim/.git'
-let g:netrw_dirhist_2='/home/chris/Downloads/xmonad-contrib-0.9.2/XMonad/Prompt'
-let g:netrw_dirhist_3='/home/chris/Downloads/xmonad-0.9.2/XMonad'
-let g:netrw_dirhist_4='/home/chris/.oh-my-zsh/themes'
-let g:netrw_dirhist_5='/etc/cron.daily'
