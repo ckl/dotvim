@@ -46,17 +46,14 @@ filetype off
 colorscheme zenburn     " color schemes at ~/.vim/colors
 syntax on               " turn syntax highlighting on
 
-" set custom status line from function
-set statusline=%!GetStatusline()
-set laststatus=2        " always show filename
-set tabline=%!ShortTabLine()  " shorten tab names and add the tab numbers to each tab
-
 " set the cursor line to have a dark gray background
 highlight CursorLine ctermbg=darkgray
 
 " remember folds and cursor position on exit
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
+
+set tabline=%!ShortTabLine()  " shorten tab names and add the tab numbers to each tab
 
 "----------------------------------------------------------------------------
 " key bindings
@@ -109,6 +106,9 @@ cmap w!! w !sudo tee % > /dev/null
 
 " Enable folding with the spacebar
 nnoremap <space> za
+
+" run python script with F5
+nnoremap <buffer> <F9> :exec 'w !python3' shellescape(@%, 1)<cr>
 
 "----------------------------------------------------------------------------
 " mappings for split windows
@@ -197,18 +197,25 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+"
+" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-obsession'
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
-" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+"----------------------------------------------------------------------------
+"" Plugin settings 
+"----------------------------------------------------------------------------
+"au VimEnter * Obsession     " start Obsession on start to track session
 
 
 "----------------------------------------------------------------------------
@@ -241,6 +248,7 @@ let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
 "----------------------------------------------------------------------------
 " YouCompleteMe
 "----------------------------------------------------------------------------
+map <C-g> :YcmCompleter GoToDefinition<cr>
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
@@ -250,6 +258,35 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+
+
+"----------------------------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------------------------
+"set statusline=[%n]\ %t
+nnoremap <silent> <C-p> :<C-u>call ToggleErrors()<cr>
+nnoremap <leader>e :lnext<cr>
+nnoremap <leader>r :lprevious<cr>
+
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+"----------------------------------------------------------------------------
+" set status line 
+"----------------------------------------------------------------------------
+"set statusline=%!GetStatusline()
+
+set statusline=%f
+set statusline+=%{ObsessionStatus()}
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+set laststatus=2        " always show filename
+
 
 "----------------------------------------------------------------------------
 " functions
@@ -312,4 +349,13 @@ function ShortTabLine()
     " and reset tab page #
     let ret .= '%#TabLineFill#%T'
     return ret
+endfunction
+
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
 endfunction
