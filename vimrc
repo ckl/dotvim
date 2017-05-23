@@ -211,6 +211,10 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-obsession'
 Plugin 'vimwiki/vimwiki'
 Plugin 'majutsushi/tagbar'
+Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'sheerun/vim-polyglot'       " syntax files for vim
+"Plugin 'SirVer/ultisnips'           " snippets for auto-competion
+"Plugin 'honza/vim-snippets''        " snippets for auto-competion
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 
@@ -229,11 +233,6 @@ nmap <F8> :TagbarToggle<CR>  " tagbar
 "" NERDTree settings 
 "----------------------------------------------------------------------------
 " put focus to NERDTree by closing it and re-opening it
-"map <leader>n :NERDTreeClose<cr>:NERDTreeToggle<cr>
-"map <leader>m :NERDTreeClose<cr>:NERDTreeFind<cr>
-"map <leader>N :NERDTreeClose<cr>
-"map <leader>n :NERDTreeTabsOpen<cr>
-"map <leader>n :NERDTreeFocusToggle<cr>
 map <C-n> :NERDTreeFocusToggle<cr>
 map <leader>n :NERDTreeTabsClose<cr>
 
@@ -246,7 +245,14 @@ let NERDTreeHighlightCursorline=1
 " don't display files with these extensions
 let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
              \ '\.tar\.gz$', '__pycache', 'Session.vim']
+"
+" Open NERDTree when Vim startsup and no files were specified
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+" Close Vim if the only window left open is NERDTree
+"autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTreeType') && b:NERDTreeType == 'primary') | q | endif
+"
 " reference
 " open file in new tab - t
 " open file in horizontal split window - i
@@ -268,6 +274,14 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 
 
 "----------------------------------------------------------------------------
+" UltiSnips
+"----------------------------------------------------------------------------
+"let g:UltiSnipsExpandTrigger='<tab>'
+"let g:UltiSnipsJumpForwardTrigger='<tab>'
+"let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
+
+
+"----------------------------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------------------------
 "set statusline=[%n]\ %t
@@ -283,10 +297,10 @@ let g:syntastic_check_on_wq = 0
 
 
 "----------------------------------------------------------------------------
-" buffers and Buffer Explorer plugin
+" buffers and MiniBuf Explorer plugin
 "----------------------------------------------------------------------------
-" open buffer explorer (takes up full window)
-"nmap <leader>be :BufExplorer<cr>
+" open MiniBufExpl with ctrl-m
+map <C-m> :MBEToggle<cr>:MBEFocus<cr>
 
 " open buffer explorer in vertical split screen
 " nmap <leader>bv :BufExplorerVerticalSplit<cr>
@@ -298,7 +312,7 @@ let g:syntastic_check_on_wq = 0
 " nmap <leader>bl :ls<cr>
 "
 " delete current buffer
-" nmap <leader>bd :bdelete<cr>
+ nmap <leader>bd :bdelete<cr>
 
 
 "----------------------------------------------------------------------------
