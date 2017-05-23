@@ -210,6 +210,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-obsession'
 Plugin 'vimwiki/vimwiki'
+Plugin 'majutsushi/tagbar'
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 
@@ -221,6 +222,7 @@ filetype plugin indent on    " required
 "" Plugin settings 
 "----------------------------------------------------------------------------
 "au VimEnter * Obsession     " start Obsession on start to track session
+nmap <F8> :TagbarToggle<CR>  " tagbar
 
 
 "----------------------------------------------------------------------------
