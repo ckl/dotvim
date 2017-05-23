@@ -1,0 +1,10 @@
+*.swp
+
+autoload/
+bundle/*
+doc/
+plugin/
+view/
+.ycm_extra_conf.py*
+
+
