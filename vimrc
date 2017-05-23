@@ -212,7 +212,7 @@ Plugin 'tpope/vim-obsession'
 Plugin 'vimwiki/vimwiki'
 Plugin 'majutsushi/tagbar'
 Plugin 'fholgado/minibufexpl.vim'
-"Plugin 'sheerun/vim-polyglot'       " syntax files for vim
+Plugin 'sheerun/vim-polyglot'       " syntax files for vim
 "Plugin 'SirVer/ultisnips'           " snippets for auto-competion
 "Plugin 'honza/vim-snippets''        " snippets for auto-competion
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
