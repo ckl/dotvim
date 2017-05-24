@@ -210,11 +210,12 @@ Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-obsession'
 Plugin 'vimwiki/vimwiki'
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'sheerun/vim-polyglot'       " syntax files for vim
 Plugin 'tpope/vim-fugitive'
 Plugin 'unblevable/quick-scope'
+Plugin 'vim-scripts/taglist.vim'
 "Plugin 'SirVer/ultisnips'           " snippets for auto-competion
 "Plugin 'honza/vim-snippets''        " snippets for auto-competion
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -228,15 +229,24 @@ filetype plugin indent on    " required
 "" Plugin settings 
 "----------------------------------------------------------------------------
 "au VimEnter * Obsession     " start Obsession on start to track session
-nnoremap <C-t> :TagbarToggle<cr>  " tagbar
+"nnoremap <C-t> :TagbarToggle<cr>  " tagbar
+let g:qs_first_occurrence_highlight_color = 45
+let g:qs_second_occurrence_highlight_color = 227
+
+" taglist.vim
+nnoremap <silent> <C-t> :TlistToggle<cr> 
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Use_Right_Window = 1
+"let Tlist_WinWidth = 40
+
 
 
 "----------------------------------------------------------------------------
 "" NERDTree settings 
 "----------------------------------------------------------------------------
 " put focus to NERDTree by closing it and re-opening it
-map <C-n> :NERDTreeFocusToggle<cr>
-map <leader>n :NERDTreeTabsClose<cr>
+map <silent> <C-n> :NERDTreeFocusToggle<cr>
+map <silent> <leader>n :NERDTreeTabsClose<cr>
 
 " close NERDTree when opening files from NERDTree
 let NERDTreeQuitOnOpen=1
@@ -263,7 +273,7 @@ let NERDTreeIgnore = [ '\.pyc$', '\.jpg$', '\.o$', '\.class$',
 "----------------------------------------------------------------------------
 " YouCompleteMe
 "----------------------------------------------------------------------------
-map <C-g> :YcmCompleter GoToDefinition<cr>
+map <silent> <C-g> :YcmCompleter GoToDefinition<cr>
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
@@ -309,8 +319,8 @@ let g:syntastic_check_on_wq = 0
 " buffers and MiniBuf Explorer plugin
 "----------------------------------------------------------------------------
 " open MiniBufExpl with ctrl-m
-map <C-m> :MBEToggle<cr>:MBEFocus<cr>
-map <leader>m :MBEClose<cr>
+map <silent> <C-m> :MBEToggle<cr>:MBEFocus<cr>
+map <silent> <leader>m :MBEClose<cr>
 
 " open buffer explorer in vertical split screen
 " nmap <leader>bv :BufExplorerVerticalSplit<cr>
