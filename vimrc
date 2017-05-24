@@ -213,6 +213,7 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'majutsushi/tagbar'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'sheerun/vim-polyglot'       " syntax files for vim
+Plugin 'tpope/vim-fugitive'
 "Plugin 'SirVer/ultisnips'           " snippets for auto-competion
 "Plugin 'honza/vim-snippets''        " snippets for auto-competion
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -272,6 +273,12 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 
+"----------------------------------------------------------------------------
+" fugitive
+"----------------------------------------------------------------------------
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gc :Gcommit<cr>
 
 "----------------------------------------------------------------------------
 " UltiSnips
@@ -324,6 +331,7 @@ set statusline=%f
 set statusline+=%{ObsessionStatus()}
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{fugitive#statusline()}
 set statusline+=%*
 set laststatus=2        " always show filename
 
