@@ -227,7 +227,7 @@ filetype plugin indent on    " required
 "" Plugin settings 
 "----------------------------------------------------------------------------
 "au VimEnter * Obsession     " start Obsession on start to track session
-nmap <F8> :TagbarToggle<CR>  " tagbar
+nnoremap <C-t> :TagbarToggle<cr>  " tagbar
 
 
 "----------------------------------------------------------------------------
@@ -279,6 +279,7 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gp :Git push origin master<cr>
 
 "----------------------------------------------------------------------------
 " UltiSnips
@@ -308,6 +309,7 @@ let g:syntastic_check_on_wq = 0
 "----------------------------------------------------------------------------
 " open MiniBufExpl with ctrl-m
 map <C-m> :MBEToggle<cr>:MBEFocus<cr>
+map <leader>m :MBEClose<cr>
 
 " open buffer explorer in vertical split screen
 " nmap <leader>bv :BufExplorerVerticalSplit<cr>
@@ -407,3 +409,60 @@ function! ToggleErrors()
         Errors
     endif
 endfunction
+
+function! SaveAndExecutePython()
+    " SOURCE [reusable window]: https://github.com/fatih/vim-go/blob/master/autoload/go/ui.vim
+
+    " save and reload the current file
+    silent execute "update | edit"
+
+    " get file path of current file
+    let s:current_buffer_file_path = expand("%")
+
+    let s:output_buffer_name = "Python"
+    let s:output_buffer_filetype = "output"
+
+    " reuse existing buffer window if it exists otherwise create a new one
+    if !exists("s:buf_nr") || !bufexists(s:buf_nr)
+        silent execute 'botright new ' . s:output_buffer_name
+        let s:buf_nr = bufnr('%')
+    elseif bufwinnr(s:buf_nr) == -1
+        silent execute 'botright new'
+        silent execute s:buf_nr . 'buffer'
+    elseif bufwinnr(s:buf_nr) != bufwinnr('%')
+        silent execute bufwinnr(s:buf_nr) . 'wincmd w'
+    endif
+
+    silent execute "setlocal filetype=" . s:output_buffer_filetype
+    setlocal bufhidden=delete
+    setlocal buftype=nofile
+    setlocal noswapfile
+    setlocal nobuflisted
+    setlocal winfixheight
+    setlocal cursorline " make it easy to distinguish
+    setlocal nonumber
+    setlocal norelativenumber
+    setlocal showbreak=""
+
+    " clear the buffer
+    setlocal noreadonly
+    setlocal modifiable
+    %delete _
+
+    " add the console output
+    silent execute ".!python " . shellescape(s:current_buffer_file_path, 1)
+
+    " resize window to content length
+    " Note: This is annoying because if you print a lot of lines then your code buffer is forced to a height of one line every time you run this function.
+    "       However without this line the buffer starts off as a default size and if you resize the buffer then it keeps that custom size after repeated runs of this function.
+    "       But if you close the output buffer then it returns to using the default size when its recreated
+    "execute 'resize' . line('$')
+
+    " make the buffer non modifiable
+    setlocal readonly
+    setlocal nomodifiable
+endfunction
+
+" Bind F5 to save file if modified and execute python script in a buffer.
+" Note: This is a normal mode bind because in insert mode F5 would insert a "<F5>" into the text.
+nnoremap <silent> <F5> :<C-u>call SaveAndExecutePython()<CR>
