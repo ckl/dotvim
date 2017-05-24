@@ -58,10 +58,10 @@ set tabline=%!ShortTabLine()  " shorten tab names and add the tab numbers to eac
 " key bindings
 "----------------------------------------------------------------------------
 " converts character at cursor to upper/lower case then moves right
-nmap t ~
+"nmap t ~
 
 " capitalizes the first letter of word at cursor
-nmap T m`b~``
+"nmap T m`b~``
 
 " clear search highlights by pressing ,<space>
 nmap <leader><space> :nohlsearch<cr>
@@ -214,6 +214,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'sheerun/vim-polyglot'       " syntax files for vim
 Plugin 'tpope/vim-fugitive'
+Plugin 'unblevable/quick-scope'
 "Plugin 'SirVer/ultisnips'           " snippets for auto-competion
 "Plugin 'honza/vim-snippets''        " snippets for auto-competion
 "Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -293,7 +294,7 @@ nnoremap <leader>gp :Git push origin master<cr>
 " Syntastic
 "----------------------------------------------------------------------------
 "set statusline=[%n]\ %t
-nnoremap <silent> <C-p> :<C-u>call ToggleErrors()<cr>
+nnoremap <silent> <C-p> :call ToggleErrors()<cr>
 nnoremap <leader>e :lnext<cr>
 nnoremap <leader>r :lprevious<cr>
 
