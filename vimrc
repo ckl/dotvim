@@ -239,6 +239,7 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Use_Right_Window = 1
 "let Tlist_WinWidth = 40
 
+nnoremap <silent> <leader>o :Obsession<cr>
 
 
 "----------------------------------------------------------------------------
