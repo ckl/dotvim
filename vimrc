@@ -120,10 +120,10 @@ nmap <leader>v <C-w>v<C-w>l
 nmap <leader>h <C-w>s<C-w>j
 
 " map Ctrl+[h,j,k,l] for easy window movement
-nmap <C-w>h <C-w>h
-nmap <C-w>j <C-w>j
-nmap <C-w>k <C-w>k
-nmap <C-w>l <C-w>l
+"nnoremap <C-h> <C-w>h
+"nnoremap <C-j> <C-w>j
+"nnoremap <C-k> <C-w>k
+"nnoremap <C-l> <C-w>l
 
 " move current window to the left of main vim window
 nmap <leader>ml <C-W>H
@@ -138,16 +138,16 @@ nmap <leader>mr <C-W>K
 nmap <leader>mr <C-W>J
 
 " resize vertical window by -3 
-nmap <C-l> :vertical resize -3<cr>
+nnoremap <C-l> :vertical resize -3<cr>
 
 " resize vertical window by +3 
-nmap <C-h> :vertical resize +3<cr>
+nnoremap <C-h> :vertical resize +3<cr>
 
 " resize horizontal window by -3
-nmap <C-j> :resize -3<cr>
+nnoremap <C-j> :resize -3<cr>
 
 " resize horizontal window by +3
-nmap <C-k> :resize +3<cr>
+nnoremap <C-k> :resize +3<cr>
 
 " enlarge window vertically
 "nmap <C-k> <C-W>+
