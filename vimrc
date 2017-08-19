@@ -211,7 +211,7 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-obsession'
 Plugin 'vimwiki/vimwiki'
 "Plugin 'majutsushi/tagbar'
-Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'fholgado/minibufexpl.vim'
 Plugin 'sheerun/vim-polyglot'       " syntax files for vim
 Plugin 'tpope/vim-fugitive'
 Plugin 'unblevable/quick-scope'
@@ -320,8 +320,8 @@ let g:syntastic_check_on_wq = 0
 " buffers and MiniBuf Explorer plugin
 "----------------------------------------------------------------------------
 " open MiniBufExpl with ctrl-m
-map <silent> <C-m> :MBEToggle<cr>:MBEFocus<cr>
-map <silent> <leader>m :MBEClose<cr>
+"map <silent> <C-m> :MBEToggle<cr>:MBEFocus<cr>
+"map <silent> <leader>m :MBEClose<cr>
 
 " open buffer explorer in vertical split screen
 " nmap <leader>bv :BufExplorerVerticalSplit<cr>
